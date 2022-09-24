@@ -41,7 +41,7 @@ class AverageMeter(object):
         self.val = val
         self.sum += val * n
         self.count += n
-        
+
     @property
     def avg(self):
         return (self.sum / self.count) if self.count>0 else 0
@@ -72,7 +72,7 @@ def train_fn(data_loader, model, criterion, optimizer, epoch, device, scheduler=
     log = None
     train_acc = torchmetrics.Accuracy()
     loop = tqdm(data_loader)
-    
+
     for batch in loop:
 
         input_ids = batch["input_ids"].to(device)
@@ -107,8 +107,8 @@ def eval_fn(data_loader, model, criterion, device):
     model.eval()
     log = None
     val_acc = torchmetrics.Accuracy()       
-    
-    
+
+
     with torch.no_grad():
         loop = tqdm(data_loader, total=len(data_loader), leave=True)
         for batch in loop:
@@ -146,7 +146,7 @@ def run(config,train_dataloader,val_dataloader,device,epochs,path,classes,lr = 5
         train_log = train_fn(
             train_dataloader, model, criterion, optimizer, epoch, device, scheduler=None
         )
-        
+
         print("Validating the model.....")
         valid_log = eval_fn(val_dataloader, model, criterion, device)
         log = {k: v.avg for k, v in train_log.items()}

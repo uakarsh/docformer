@@ -18,7 +18,7 @@ class PositionalEncoding(nn.Module):
         pe[0, :, 0::2] = torch.sin(position * div_term)
         pe[0, :, 1::2] = torch.cos(position * div_term)
         self.register_buffer("pe", pe)
-        
+
 
     def forward(self) -> Tensor:
         x = self.pe[0, : self.max_len]
@@ -135,14 +135,14 @@ class DocFormerEmbeddings(nn.Module):
         hidden_size = self.config["hidden_size"]
         num_feat = x_feature.shape[-1]
         sub_dim = hidden_size // num_feat
-        
+
         # Clamping and adding a bias for handling negative values
         x_feature[:,:,3:] = torch.clamp(x_feature[:,:,3:],-self.config["max_2d_position_embeddings"],self.config["max_2d_position_embeddings"])
         x_feature[:,:,3:]+= self.config["max_2d_position_embeddings"]
 
         y_feature[:,:,3:] = torch.clamp(y_feature[:,:,3:],-self.config["max_2d_position_embeddings"],self.config["max_2d_position_embeddings"])
         y_feature[:,:,3:]+= self.config["max_2d_position_embeddings"]
-        
+
         x_topleft_position_embeddings_v = self.x_topleft_position_embeddings_v(x_feature[:,:,0])
         x_bottomright_position_embeddings_v = self.x_bottomright_position_embeddings_v(x_feature[:,:,1])
         w_position_embeddings_v = self.w_position_embeddings_v(x_feature[:,:,2])
@@ -268,7 +268,7 @@ class DocFormerEmbeddings(nn.Module):
         )
 
         t_bar_s = x_calculated_embedding_t + y_calculated_embedding_t + self.position_embeddings_t()
-        
+
         return v_bar_s, t_bar_s
 
 
@@ -486,7 +486,7 @@ class LanguageFeatureExtractor(nn.Module):
 
     def forward(self, x):
         return self.embedding_vector(x)
-        
+
 
 
 class ExtractFeatures(nn.Module):
@@ -503,9 +503,9 @@ class ExtractFeatures(nn.Module):
         self.spatial_feature = DocFormerEmbeddings(config)
 
     def forward(self, encoding):
-      
+
         image = encoding['resized_scaled_img']
-            
+
         language = encoding['input_ids']
         x_feature = encoding['x_features']
         y_feature = encoding['y_features']
@@ -514,13 +514,13 @@ class ExtractFeatures(nn.Module):
         t_bar = self.language_feature(language)
 
         v_bar_s, t_bar_s = self.spatial_feature(x_feature, y_feature)
-        
+
         return v_bar, t_bar, v_bar_s, t_bar_s
 
-    
-    
+
+
 class DocFormer(nn.Module):
-    
+
     '''
     Easy boiler plate, because this model will just take as an input, the dictionary which is obtained from create_features function
     '''

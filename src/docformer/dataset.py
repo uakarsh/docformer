@@ -63,12 +63,12 @@ def apply_ocr(image_fp):
     return {"words": words, "bbox": actual_bboxes}
 
 def get_tokens_with_boxes(unnormalized_word_boxes, pad_token_box, word_ids,max_seq_len = 512):
-    
+
     # assert len(unnormalized_word_boxes) == len(word_ids), this should not be applied, since word_ids may have higher 
     # length and the bbox corresponding to them may not exist
-    
+
     unnormalized_token_boxes = []
-    
+
     for i, word_idx in enumerate(word_ids):
         if word_idx is None:
             break
@@ -78,11 +78,11 @@ def get_tokens_with_boxes(unnormalized_word_boxes, pad_token_box, word_ids,max_s
     num_pad_tokens = len(word_ids) - i - 1
     if num_pad_tokens > 0:
         unnormalized_token_boxes.extend([pad_token_box] * num_pad_tokens)
-        
-        
+
+
     if len(unnormalized_token_boxes)<max_seq_len:
         unnormalized_token_boxes.extend([pad_token_box] * (max_seq_len-len(unnormalized_token_boxes)))
-        
+
     return unnormalized_token_boxes
 
 
@@ -144,13 +144,13 @@ def get_relative_distance(bboxes, centroids, pad_tokens_start_idx):
         )
 
     # For the last word
-    
+
     a_rel_x.append([0]*8)  
     a_rel_y.append([0]*8)
 
 
     return a_rel_x, a_rel_y
-     
+
 
 
 def apply_mask(inputs, tokenizer):
@@ -214,7 +214,7 @@ def create_features(
                          is_split_into_words=True,
                          truncation=True,
                          add_special_tokens=False)
-    
+
     unnormalized_token_boxes = get_tokens_with_boxes(bounding_box,
                                                                   PAD_TOKEN_BOX,
                                                                   encoding.word_ids())
@@ -226,13 +226,13 @@ def create_features(
 
     # step 6: Add bounding boxes to the encoding dict
     encoding["unnormalized_token_boxes"] = unnormalized_token_boxes
-   
+
     # step 7: apply mask for the sake of pre-training
     if apply_mask_for_mlm:
         encoding["mlm_labels"] = encoding["input_ids"]
         encoding["input_ids"] = apply_mask(encoding["input_ids"], tokenizer)
         assert len(encoding["mlm_labels"]) == max_seq_length, "Length of mlm_labels != Length of max_seq_length"
-       
+
     assert len(encoding["input_ids"]) == max_seq_length, "Length of input_ids != Length of max_seq_length"
     assert len(encoding["attention_mask"]) == max_seq_length, "Length of attention mask != Length of max_seq_length"
     assert len(encoding["token_type_ids"]) == max_seq_length, "Length of token type ids != Length of max_seq_length"
@@ -253,7 +253,7 @@ def create_features(
         resized_and_aligned_bboxes.append(resize_align_bbox(tuple(bbox), *original_image.size, *target_size))
 
     encoding["resized_and_aligned_bounding_boxes"] = resized_and_aligned_bboxes
-    
+
     # step 11: add the relative distances in the normalized grid
     bboxes_centroids = get_centroid(resized_and_aligned_bboxes)
     pad_token_start_index = get_pad_token_id_start_index(words, encoding, tokenizer)
@@ -290,13 +290,13 @@ def create_features(
             pickle.dump(encoding, f)
 
     # step 16: keys to keep, resized_and_aligned_bounding_boxes have been added for the purpose to test if the bounding boxes are drawn correctly or not, it maybe removed
-    
+
     keys = ['resized_scaled_img', 'x_features','y_features','input_ids','resized_and_aligned_bounding_boxes']
-    
+
     if apply_mask_for_mlm:
         keys.append('mlm_labels')
-    
+
     final_encoding = {k:encoding[k] for k in keys}
-    
+
     del encoding
     return final_encoding

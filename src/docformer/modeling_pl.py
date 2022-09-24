@@ -41,9 +41,9 @@ config = {
 
 
 class Model(pl.LightningModule):
-    
+
   def __init__(self,config,num_classes,lr = 5e-5):
-    
+
     super().__init__()
     self.save_hyperparameters()
     self.docformer = DocFormerForClassification(config,num_classes)
@@ -52,12 +52,12 @@ class Model(pl.LightningModule):
     return self.docformer(x)
 
   def training_step(self,batch,batch_idx):
-        
+
     # For the purpose of pretraining, there could be multiple target outputs, so therefore we need to add additional loss function, as for an image_fp, if the MLM + IR is to be done
     # then, there could be a dictionary as an output, and then we need to define two criterion as CrossEntropy and L1 loss, and add the weighted sum of them as the total loss
     # and proceed forward, and for the whole process, only the final head of the DocFormer encoder needs to be changed, and thats it
-    
-    
+
+
     # Currently, we are performing only the MLM Part
     logits = self.forward(batch)
     criterion = torch.nn.CrossEntropyLoss()
@@ -65,7 +65,7 @@ class Model(pl.LightningModule):
     self.log("train_loss",loss,prog_bar = True)
 
   def validation_step(self, batch, batch_idx):
-    
+
     logits = self.forward(batch)
     b,size,classes = logits.shape
     criterion = torch.nn.CrossEntropyLoss()

@@ -116,7 +116,7 @@ label2idx = {k: v for v, k in enumerate(labels)}
 import math
 
 def createPickelFile(image,pathToSave,tokenizer=None,target_size = 224,max_seq_length = 512,pretrain = True):
-    
+
         if not os.path.exists(pathToSave):
           os.mkdir(pathToSave)
 
