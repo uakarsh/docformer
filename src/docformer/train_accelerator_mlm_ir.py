@@ -13,23 +13,19 @@ import torchmetrics
 import math
 import numpy as np
 import torch
-from torch.utils.data import Dataset, DataLoader
-import pandas as pd
-from PIL import Image
-import json
-import numpy as np
-from tqdm.auto import tqdm
-from torchvision.transforms import ToTensor
-import torch.nn.functional as F
 import torch.nn as nn
+import torch.nn.functional as F
+from torch.utils.data import DataLoader, DataLoader, Dataset, Dataset
+from torch.autograd import Variable
+import pandas as pd
+from PIL import Image, Image
+import json
+from tqdm.auto import tqdm
+from torchvision.transforms import ToTensor, ToTensor
 import torchvision.models as models
 from einops import rearrange
 from einops import rearrange as rearr
-from PIL import Image
 from sklearn.model_selection import train_test_split as tts
-from torch.autograd import Variable
-from torch.utils.data import DataLoader, Dataset
-from torchvision.transforms import ToTensor
 from modeling import *
 
 batch_size = 9

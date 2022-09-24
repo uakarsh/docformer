@@ -17,23 +17,15 @@ from datetime import datetime
 import time
 import random
 from tqdm.auto import tqdm
-
-## Libraries
-import os
 import transformers
-from PIL import Image
-import pytesseract
-import numpy as np
+from PIL import *
 import torch
+import torch.nn as nn
 from torchvision.transforms import ToTensor
 import pickle
 
 import warnings
 warnings.simplefilter(action='ignore',category = FutureWarning)
-
-#Torch
-import torch
-import torch.nn as nn
 from torch.utils.data import Dataset,DataLoader
 
 #sklearn
@@ -41,7 +33,6 @@ from sklearn.model_selection import StratifiedKFold
 
 #CV
 import cv2
-from PIL import *
 
 #Albumenatations
 import albumentations as A
