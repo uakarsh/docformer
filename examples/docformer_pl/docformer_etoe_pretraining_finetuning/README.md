@@ -3,6 +3,10 @@
 
 ## Pretraining
 
+
+### Guidelines:
+- [This](https://github.com/airsplay/lxmert/blob/master/experience_in_pretraining.md) experience is helpful, since there are no fix guidelines of how to pre-train.
+
 ### Data:
 - We would be using the [IDL Dataset](https://github.com/furkanbiten/idl_data) for pretraining the model.
 
@@ -24,6 +28,7 @@
 ### Training:
 
 - It can be decided later, we have frameworks for it. First, work is to make sure the data is prepared correctly.
+- 
 
 
 
