@@ -23,7 +23,7 @@
 
 ### Training:
 
-
+- It can be decided later, we have frameworks for it. First, work is to make sure the data is prepared correctly.
 
 
 
