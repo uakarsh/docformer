@@ -22,7 +22,7 @@
 ### Data Preprocessing:
 - Firstly, we need to download the dataset, and as mentioned [here](http://datasets.cvc.uab.es/UCSF_IDL/index.txt). So, there are a lot of folders, i.e f.tar.gz.01,02 and so on. We can choose to select one or more depending upon the size of the dataset we want to use, and the memory present in the system.
 - Now, this dataset only contains the OCR, so we need to download the corresponding PDF (the information is in the json file). We would have the code for it so not to worry. We would make the same structure of PDF as that of OCR.
-- We now can use the Hugging Face Dataset to create the OCR from each image of the PDF. So, for each image in the PDF, we would have the corresponding OCR.
+- We now can use the Hugging Face Dataset to save the OCR from each image of the PDF. So, for each image in the PDF, we would have the corresponding OCR.
 - Now, we can use the OCR and the PDF to create the dataset for MLM.
 
 ### Training:
