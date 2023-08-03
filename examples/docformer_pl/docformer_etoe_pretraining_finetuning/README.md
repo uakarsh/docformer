@@ -45,8 +45,8 @@
 
 
 ## Current Updates:
-[x] First work is to make the data pre-processing code for the IDL Dataset.
-[x] Second work is to prepare scripts to load the pre-processed data as well as, make a sample run for the DocFormer model on Masked languages modeling. 
-[] Third work is to also prepare a script for doing Masked Language Modeling and Image Text Matching
-[] Write the `pytorch` code for `mutli gpu` training. We can leverage tools such as `accelerate` and `PyTorch lightning`, but it would be better to write in `plain pytorch`, since that would be a good learning experience, and we would be able to debug things easily
+- [x] First work is to make the data pre-processing code for the IDL Dataset.
+- [x] Second work is to prepare scripts to load the pre-processed data as well as, make a sample run for the DocFormer model on Masked languages modeling. 
+- [] Third work is to also prepare a script for doing Masked Language Modeling and Image Text Matching
+- [] Write the `pytorch` code for `mutli gpu` training. We can leverage tools such as `accelerate` and `PyTorch lightning`, but it would be better to write in `plain pytorch`, since that would be a good learning experience, and we would be able to debug things easily
 
